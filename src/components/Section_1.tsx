@@ -7,13 +7,35 @@ import growLazy from "../img/grow-lazy.jpg";
 import grow from "../img/grow.jpg";
 import icon from "../img/icons.svg";
 
-type Props = {};
+interface IProps {
+  learnMore: boolean;
+}
 
-export const Section_1 = (props: Props) => {
+export const Section_1 = (props: IProps) => {
+  if (props.learnMore) {
+    // const s1cords: any = document
+    //   .querySelector("#section--1")
+    //   ?.getBoundingClientRect();
+    // window.scrollTo({
+    //   left: s1cords?.left + window.pageXOffset,
+    //   top: s1cords?.top + window.pageYOffset,
+    //   behavior: "smooth",
+    // });
+
+    const section1: any = document.querySelector("#section--1");
+    section1.scrollIntoView({ behavior: "smooth" });
+  }
+
+  const featureHandler = () => {
+    const section1: any = document.querySelector(".section__description");
+    section1.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <section className="section" id="section--1">
       <div className="section__title">
-        <h2 className="section__description">Features</h2>
+        <h2 className="section__description" onClick={featureHandler}>
+          Features
+        </h2>
         <h3 className="section__header">
           Everything you need in a modern bank and more.
         </h3>

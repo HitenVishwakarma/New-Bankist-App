@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../img/logo.png";
 import hero from "../img/hero.png";
 import { Modal } from "../modal/Modal";
+import { Section_1 } from "./Section_1";
+import { Section_2 } from "./Section_2";
+import { Section_3 } from "./Section_3";
 
 type Props = {};
 
 export const Header = (props: Props) => {
   const [isModal, setIsModal] = useState(false);
+  const [learnMore, setLearnMore] = useState(false);
 
   const openModal = () => {
     setIsModal(true);
@@ -14,6 +18,16 @@ export const Header = (props: Props) => {
 
   const closeModal = () => {
     setIsModal(false);
+  };
+
+  useEffect(() => {
+    if (learnMore) {
+      onLearnMore();
+    }
+  }, [learnMore]);
+
+  const onLearnMore = () => {
+    setLearnMore(!learnMore);
   };
 
   return (
@@ -53,18 +67,21 @@ export const Header = (props: Props) => {
           <h1>
             When
             {/* <!-- Green highlight effect --> */}
-            <span className="highlight">banking</span>
+            <span className="highlight"> banking </span>
             meets
             <br />
-            <span className="highlight">minimalist</span>
+            <span className="highlight"> minimalist</span>
           </h1>
           <h4>A simpler banking experience for a simpler life.</h4>
-          <button className="btn--text btn--scroll-to">
-            Learn more &DownArrow;
+          <button className="btn--text btn--scroll-to" onClick={onLearnMore}>
+            Learn more &darr;
           </button>
           <img src={hero} className="header__img" alt="Minimalist bank items" />
         </div>
       </header>
+      <Section_1 learnMore={learnMore} />
+      <Section_2 />
+      <Section_3 />
       {isModal && <Modal openModal={isModal} closeModal={closeModal} />}
     </>
   );
