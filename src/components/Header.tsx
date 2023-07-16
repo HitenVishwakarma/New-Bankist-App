@@ -3,14 +3,11 @@ import logo from "../img/logo.png";
 import hero from "../img/hero.png";
 import { Modal } from "../modal/Modal";
 import { Section_1 } from "./Section_1";
-import { Section_2 } from "./Section_2";
-import { Section_3 } from "./Section_3";
 
 type Props = {};
 
 export const Header = (props: Props) => {
   const [isModal, setIsModal] = useState(false);
-  const [learnMore, setLearnMore] = useState(false);
 
   const openModal = () => {
     setIsModal(true);
@@ -20,14 +17,25 @@ export const Header = (props: Props) => {
     setIsModal(false);
   };
 
-  useEffect(() => {
-    if (learnMore) {
-      onLearnMore();
-    }
-  }, [learnMore]);
-
   const onLearnMore = () => {
-    setLearnMore(!learnMore);
+    // const s1cords: any = document
+    //   .querySelector("#section--1")
+    //   ?.getBoundingClientRect();
+    // window.scrollTo({
+    //   left: s1cords?.left + window.pageXOffset,
+    //   top: s1cords?.top + window.pageYOffset,
+    //   behavior: "smooth",
+    // });
+    const section1: any = document.querySelector("#section--1");
+    section1.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const navLinkHandler = (e: any) => {
+    if (e.target.classList.contains("nav__link")) {
+      e.preventDefault();
+      const id = e.target.getAttribute("href");
+      document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -35,7 +43,7 @@ export const Header = (props: Props) => {
       <header className="header">
         <nav className="nav">
           <img src={logo} alt="Bankist logo" className="nav__logo" id="logo" />
-          <ul className="nav__links">
+          <ul className="nav__links" onClick={(e) => navLinkHandler(e)}>
             <li className="nav__item">
               <a className="nav__link" href="#section--1">
                 Features
@@ -79,9 +87,7 @@ export const Header = (props: Props) => {
           <img src={hero} className="header__img" alt="Minimalist bank items" />
         </div>
       </header>
-      <Section_1 learnMore={learnMore} />
-      <Section_2 />
-      <Section_3 />
+      <Section_1 />
       {isModal && <Modal openModal={isModal} closeModal={closeModal} />}
     </>
   );
